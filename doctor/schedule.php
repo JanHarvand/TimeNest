@@ -367,7 +367,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="Email" class="form-label">Doctor of this session: </label>
+                                    <label for="Email" class="form-label">Teacher of this session: </label>
                                 </td>
                             </tr>
                             <tr>
