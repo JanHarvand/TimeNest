@@ -406,8 +406,8 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit Doctor Details.</p>
-                                        Doctor ID : '.$id.' (Auto Generated)<br><br>
+                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit Teacher Details.</p>
+                                        Teacher ID : '.$id.' (Auto Generated)<br><br>
                                         </td>
                                     </tr>
                                     <tr>
@@ -431,7 +431,7 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="text" name="name" class="input-text" placeholder="Doctor Name" value="'.$name.'" required><br>
+                                            <input type="text" name="name" class="input-text" placeholder="Teacher Name" value="'.$name.'" required><br>
                                         </td>
                                         
                                     </tr>
