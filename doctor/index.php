@@ -98,7 +98,7 @@
                 </tr>
                 <tr class="menu-row" >
                     <td class="menu-btn menu-icon-patient">
-                        <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">My Patients</p></a></div>
+                        <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">My Students</p></a></div>
                     </td>
                 </tr>
                 <tr class="menu-row" >
@@ -158,7 +158,7 @@
                             <h3>Welcome!</h3>
                             <h1><?php echo $username  ?>.</h1>
                             <p>Thanks for joinnig with us. We are always trying to get you a complete service<br>
-                            You can view your dailly schedule, Reach Patients Appointment at home!<br><br>
+                            You can view your dailly schedule, Reach Students Appointment at home!<br><br>
                             </p>
                             <a href="appointment.php" class="non-style-link"><button class="btn-primary btn" style="width:30%">View My Appointments</button></a>
                             <br>
@@ -209,7 +209,7 @@
                                                                     <?php    echo $patientrow->num_rows  ?>
                                                                 </div><br>
                                                                 <div class="h3-dashboard">
-                                                                    All Patients &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                    All Students &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                                 </div>
                                                         </div>
                                                                 <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/patients-hover.svg');"></div>
