@@ -31,9 +31,11 @@
     session_start();
 
     if(isset($_SESSION["user"])){
-        if(($_SESSION["user"])=="" or $_SESSION['usertype']!='a'){
-            header("location: ../login.php");
-        }
+        if(($_SESSION["user"])!="" or $_SESSION['usertype']=='a'){
+			$useremail=$_SESSION["user"];
+        }else{
+             header("location: ../login.php");
+		}
 
     }else{
         header("location: ../login.php");
@@ -42,6 +44,12 @@
 
     //import database
     include("../connection.php");
+    $userrow = $database->query("select * from admin where aemail='$useremail'");
+    $userfetch=$userrow->fetch_assoc();
+
+
+    //echo $userid;
+    //echo $username;
 
     
     ?>
@@ -57,7 +65,7 @@
                                 </td>
                                 <td style="padding:0px;margin:0px;">
                                     <p class="profile-title">Administrator</p>
-                                    <p class="profile-subtitle">admin@edoc.com</p>
+                                    <p class="profile-subtitle"><?php echo substr($useremail,0,22)?> </p>
                                 </td>
                             </tr>
                             <tr>
@@ -74,8 +82,8 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-doctor ">
-                        <a href="doctors.php" class="non-style-link-menu "><div><p class="menu-text">Teachers</p></a></div>
+                    <td class="menu-btn menu-icon-teacher">
+                        <a href="teachers.php" class="non-style-link-menu"><div><p class="menu-text">Teachers</p></a></div>
                     </td>
                 </tr>
                 <tr class="menu-row" >
@@ -89,8 +97,8 @@
                     </td>
                 </tr>
                 <tr class="menu-row" >
-                    <td class="menu-btn menu-icon-patient">
-                        <a href="patient.php" class="non-style-link-menu"><div><p class="menu-text">Students</p></a></div>
+                    <td class="menu-btn menu-icon-student">
+                        <a href="student.php" class="non-style-link-menu"><div><p class="menu-text">Students</p></a></div>
                     </td>
                 </tr>
             </table>
@@ -102,13 +110,13 @@
                             
                             <td colspan="2" class="nav-bar" >
                                 
-                                <form action="doctors.php" method="post" class="header-search">
+                                <form action="teachers.php" method="post" class="header-search">
         
-                                    <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Teacher name or Email" list="doctors">&nbsp;&nbsp;
+                                    <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Teacher name or Email" list="teachers">&nbsp;&nbsp;
                                     
                                     <?php
-                                        echo '<datalist id="doctors">';
-                                        $list11 = $database->query("select  docname,docemail from  doctor;");
+                                        echo '<datalist id="teachers">';
+                                        $list11 = $database->query("select  docname,docemail from  teacher;");
         
                                         for ($y=0;$y<$list11->num_rows;$y++){
                                             $row00=$list11->fetch_assoc();
@@ -139,8 +147,8 @@
                                 echo $today;
 
 
-                                $patientrow = $database->query("select  * from  patient;");
-                                $doctorrow = $database->query("select  * from  doctor;");
+                                $studentrow = $database->query("select  * from  student;");
+                                $teacherrow = $database->query("select  * from  teacher;");
                                 $appointmentrow = $database->query("select  * from  appointment where appodate>='$today';");
                                 $schedulerow = $database->query("select  * from  schedule where scheduledate='$today';");
 
@@ -169,26 +177,26 @@
                                     <div  class="dashboard-items"  style="padding:20px;margin:auto;width:95%;display: flex">
                                         <div>
                                                 <div class="h1-dashboard">
-                                                    <?php    echo $doctorrow->num_rows  ?>
+                                                    <?php    echo $teacherrow->num_rows  ?>
                                                 </div><br>
                                                 <div class="h3-dashboard">
                                                     Teachers &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
                                         </div>
-                                                <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/doctors-hover.svg');"></div>
+                                                <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/teachers-hover.png');"></div>
                                     </div>
                                 </td>
                                 <td style="width: 25%;">
                                     <div  class="dashboard-items"  style="padding:20px;margin:auto;width:95%;display: flex;">
                                         <div>
                                                 <div class="h1-dashboard">
-                                                    <?php    echo $patientrow->num_rows  ?>
+                                                    <?php    echo $studentrow->num_rows  ?>
                                                 </div><br>
                                                 <div class="h3-dashboard">
                                                     Students &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
                                         </div>
-                                                <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/patients-hover.svg');"></div>
+                                                <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/students-hover.png');"></div>
                                     </div>
                                 </td>
                                 <td style="width: 25%;">
@@ -290,7 +298,7 @@
                                         
                                             <?php
                                             $nextweek=date("Y-m-d",strtotime("+1 week"));
-                                            $sqlmain= "select appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where schedule.scheduledate>='$today'  and schedule.scheduledate<='$nextweek' order by schedule.scheduledate desc";
+                                            $sqlmain= "select appointment.appoid,schedule.scheduleid,schedule.title,teacher.docname,student.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join student on student.pid=appointment.pid inner join teacher on schedule.docid=teacher.docid  where schedule.scheduledate>='$today'  and schedule.scheduledate<='$nextweek' order by schedule.scheduledate desc";
 
                                                 $result= $database->query($sqlmain);
                 
@@ -386,7 +394,7 @@
                                         
                                             <?php
                                             $nextweek=date("Y-m-d",strtotime("+1 week"));
-                                            $sqlmain= "select schedule.scheduleid,schedule.title,doctor.docname,schedule.scheduledate,schedule.scheduletime,schedule.nop from schedule inner join doctor on schedule.docid=doctor.docid  where schedule.scheduledate>='$today' and schedule.scheduledate<='$nextweek' order by schedule.scheduledate desc"; 
+                                            $sqlmain= "select schedule.scheduleid,schedule.title,teacher.docname,schedule.scheduledate,schedule.scheduletime,schedule.nop from schedule inner join teacher on schedule.docid=teacher.docid  where schedule.scheduledate>='$today' and schedule.scheduledate<='$nextweek' order by schedule.scheduledate desc"; 
                                                 $result= $database->query($sqlmain);
                 
                                                 if($result->num_rows==0){
