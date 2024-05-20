@@ -48,16 +48,16 @@
         $result= $database->query("select * from webuser where email='$email'");
         if($result->num_rows==1){
             $utype=$result->fetch_assoc()['usertype'];
-            if ($utype=='p'){
-                $checker = $database->query("select * from patient where pemail='$email' and ppassword='$password'");
+            if ($utype=='s'){
+                $checker = $database->query("select * from student where pemail='$email' and ppassword='$password'");
                 if ($checker->num_rows==1){
 
 
-                    //   Patient dashbord
+                    //   Student dashbord
                     $_SESSION['user']=$email;
-                    $_SESSION['usertype']='p';
+                    $_SESSION['usertype']='s';
                     
-                    header('location: patient/index.php');
+                    header('location: student/index.php');
 
                 }else{
                     $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
@@ -79,15 +79,15 @@
                 }
 
 
-            }elseif($utype=='d'){
-                $checker = $database->query("select * from doctor where docemail='$email' and docpassword='$password'");
+            }elseif($utype=='t'){
+                $checker = $database->query("select * from teacher where docemail='$email' and docpassword='$password'");
                 if ($checker->num_rows==1){
 
 
-                    //   doctor dashbord
+                    //   teacher dashbord
                     $_SESSION['user']=$email;
-                    $_SESSION['usertype']='d';
-                    header('location: doctor/index.php');
+                    $_SESSION['usertype']='t';
+                    header('location: teacher/index.php');
 
                 }else{
                     $error='<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
